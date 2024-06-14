@@ -4,6 +4,7 @@ const Messages = {
   updateSuccess: "Update successful",
   updateFailed: "Update failed! Try again",
   serverError: "An Error Occurred",
+  urlNotFound: "URL Not Found",
   invalidRequest: "Invalid Request",
   invalidToken: "Invalid Token",
   invalidRefreshToken: "Invalid Refresh Token",

@@ -2,7 +2,7 @@ const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 const path = require("path");
-const log = require("./logger"); // Assuming you have a logger utility
+const { logger } = require("../utils");
 
 const SESSION_FILE_PATH = path.join(__dirname, "session.json");
 let sessionCfg;
@@ -20,29 +20,53 @@ const client = new Client({
 
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
-  log.info("QR Code received, scan to log in.");
+  logger.info("QR Code received, scan to logger in.");
 });
 
 client.on("ready", () => {
-  log.info("Client is ready!");
+  logger.info("Client is ready!");
 });
 
 client.on("authenticated", (session) => {
-  log.info("Client is authenticated");
+  logger.info("Client is authenticated");
+  //get all contacts and chats
+  //extract groups and group members & id
+  client.getContacts().then((contacts) => {
+    fs.writeFile(
+      path.join(__dirname, "contacts.json"),
+      JSON.stringify(contacts),
+      (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      }
+    );
+  });
+  client.getChats().then((chats) => {
+    fs.writeFile(
+      path.join(__dirname, "chats.json"),
+      JSON.stringify(chats),
+      (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      }
+    );
+  });
   fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), (err) => {
     if (err) {
-      log.error(err);
+      logger.error(err);
     }
   });
 });
 
 client.on("auth_failure", (msg) => {
-  log.error("Authentication failure", msg);
+  logger.error("Authentication failure", msg);
   fs.unlinkSync(SESSION_FILE_PATH); // Remove the session file if authentication fails
 });
 
 client.on("disconnected", (reason) => {
-  log.info("Client was logged out", reason);
+  logger.info("Client was logged out", reason);
   fs.unlinkSync(SESSION_FILE_PATH);
   client.initialize(); // Reinitialize client
 });

@@ -1,14 +1,29 @@
 const express = require("express");
-const messageController = require("../controllers/messageController");
+const messageController = require("../controllers/message");
 const router = express.Router();
 
-// Post a new custom message
-router.post("/", messageController.createMessage);
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${file.fieldname}-${Date.now()}-${file.originalname}`);
+  },
+});
 
-// Update a custom message
-router.put("/:messageId", messageController.updateMessage);
+const upload = multer({ storage: storage });
 
-// Send a custom message to a group or individual
+router.post(
+  "/create",
+  upload.array("attachments"),
+  messageController.createMessage
+);
+router.post(
+  "/update/:messageId",
+  upload.array("attachments"),
+  messageController.updateMessage
+);
 router.post("/send", messageController.sendMessage);
 
 module.exports = router;

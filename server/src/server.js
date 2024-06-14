@@ -3,13 +3,14 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const { DBConn } = require("./config");
+const { DBConn, messages } = require("./config");
 const cookieParser = require("cookie-parser");
 const { errorHandler } = require("./middleware");
 const session = require("express-session");
 const passport = require("passport");
 require("./config/passport-setup");
 const auth = require("./routes/auth"); // Routes for authentication
+const message = require("./routes/messages"); // Routes for messages
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 
 // Auth Routes
 app.use("/auth", auth);
+app.use("/messages", message);
 
 app.use("*", (req, res) => {
   res.status(404).json({ message: messages.urlNotFound });

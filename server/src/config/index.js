@@ -1,3 +1,4 @@
+const messages = require("./messages");
 const DBConn = require("./dbConn");
 
 const allowedOrigins = [
@@ -39,4 +40,5 @@ module.exports = {
   withdrawalModes,
   withdrawalStatus,
   walletConfig,
+  messages,
 };

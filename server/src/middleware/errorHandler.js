@@ -1,4 +1,4 @@
-const { clearTokens, messages, logger } = require("@utils");
+const { clearTokens, messages, logger } = require("../utils");
 
 // General error handling middleware
 const errorHandler = (error, req, res, next) => {

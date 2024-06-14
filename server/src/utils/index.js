@@ -1,5 +1,5 @@
 const createId = require("./createId");
-const messages = require("./messages");
+const messages = require("../config/messages");
 const logger = require("./logger");
 const errorHOC = require("./errorHOC");
 const whatsappClient = require("./whatsappClient");

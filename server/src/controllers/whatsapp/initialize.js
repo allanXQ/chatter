@@ -1,4 +1,4 @@
-const { whatsappClient } = require("@utils");
+const { whatsappClient } = require("../../utils");
 
 const clientInitialize = async (req, res) => {
   whatsappClient.initialize();

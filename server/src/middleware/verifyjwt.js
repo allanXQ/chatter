@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { messages } = require("@utils");
+const { messages } = require("../config");
 require("dotenv").config();
 
 const verifyjwt = (req, res, next) => {

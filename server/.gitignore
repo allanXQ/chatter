@@ -6,6 +6,8 @@
 .pnp.js
 .env
 
+/logs
+
 # testing
 /coverage
 
@@ -21,7 +23,7 @@
 .package-lock.json
 chats.json
 .wwebjs_cache
-logs
+.wwebjs_auth
 notes
 
 npm-debug.log*

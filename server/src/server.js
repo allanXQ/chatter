@@ -6,10 +6,23 @@ const morgan = require("morgan");
 const { DBConn } = require("./config");
 const cookieParser = require("cookie-parser");
 const { errorHandler } = require("./middleware");
+const session = require("express-session");
+const passport = require("passport");
+require("./config/passport-setup");
+// const authRoutes = require("./routes/authRoutes"); // Routes for authentication
 
 const app = express();
 
 // Middlewares
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(helmet());
 app.use(express.json());

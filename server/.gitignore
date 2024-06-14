@@ -21,6 +21,7 @@
 .package-lock.json
 chats.json
 .wwebjs_cache
+logs
 
 npm-debug.log*
 yarn-debug.log*

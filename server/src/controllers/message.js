@@ -1,7 +1,7 @@
 const storedMessages = require("../models/storedMessages");
 const { client, MessageMedia } = require("../services/whatsapp"); // Import the WhatsApp client and media handling
 
-exports.sendMessage = async (req, res) => {
+const sendMessage = async (req, res) => {
   const { messageId, recipients } = req.body; // recipients is now an array of IDs
   try {
     const message = await storedMessages.findById(messageId);
@@ -31,4 +31,8 @@ exports.sendMessage = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+};
+
+module.exports = {
+  sendMessage,
 };

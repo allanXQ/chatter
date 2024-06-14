@@ -9,7 +9,7 @@ const { errorHandler } = require("./middleware");
 const session = require("express-session");
 const passport = require("passport");
 require("./config/passport-setup");
-// const authRoutes = require("./routes/authRoutes"); // Routes for authentication
+const authRoutes = require("./routes/authRoutes"); // Routes for authentication
 
 const app = express();
 
@@ -33,6 +33,9 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+// Auth Routes
+app.use("/auth", authRoutes);
 
 app.use("*", (req, res) => {
   res.status(404).json({ message: messages.urlNotFound });
